@@ -1,15 +1,70 @@
 <template>
-  <div>
-    FooterGuide
+  <div class="footer-guide">
+    <a href="javascript:;" class="guide_item" :class="{on: '/msite'===$route.path}" @click="goTo('/msite')">
+      <span class="item_icon">
+        <i class="iconfont icon-waimai"></i>
+      </span>
+      <span>外卖</span>
+    </a>
+    <a href="javascript:;" class="guide_item" :class="{on: '/search'===$route.path}" @click="goTo('/search')">
+      <span class="item_icon">
+        <i class="iconfont icon-sousuo"></i>
+      </span>
+      <span>搜索</span>
+    </a>
+    <a href="javascript:;" class="guide_item" :class="{on: '/images'===$route.path}" @click="goTo('/images')">
+      <span class="item_icon">
+        <i class="iconfont icon-dingdan"></i>
+      </span>
+      <span>订单</span>
+    </a>
+    <a href="javascript:;" class="guide_item" :class="{on: '/profile'===$route.path}" @click="goTo('/profile')">
+      <span class="item_icon">
+        <i class="iconfont icon-wode"></i>
+      </span>
+      <span>我的</span>
+    </a>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'FooterGuide'
+  name: 'FooterGuide',
+  methods: {
+    goTo (path) {
+      this.$router.replace(path)
+    }
+  }
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
+  @import "../../common/stylus/mixins.styl"
+  .footer-guide
+    top-border-1px(#e4e4e4)
+    position fixed
+    left 0
+    right 0
+    bottom 0
+    width 100%
+    z-index 100
+    background-color #fff
+    height 50px
+    display flex
+    .guide_item
+      display flex
+      flex 1
+      text-align center
+      flex-direction column
+      align-items center
+      margin 5px
+      color #999
+      &.on
+        color greenyellow
+      span
+        font-size 12px
+        margin-top 2px
+        margin-bottom 2px
+        .iconfont
+          font-size 22px
 </style>

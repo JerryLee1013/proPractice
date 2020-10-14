@@ -10,8 +10,9 @@ Vue.use(VueRouter)
 const routes = [
   {path: '/msite', component: MSite},
   {path: '/search', component: Search},
-  {path: '/order', component: Order},
-  {path: '/profile', component: Profile}
+  {path: '/images', component: Order},
+  {path: '/profile', component: Profile},
+  {path: '/', redirect: '/msite'}
 ]
 
 // eslint-disable-next-line
