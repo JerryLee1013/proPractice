@@ -2,23 +2,23 @@
   <section class="profile">
     <HeaderTop title="我的"></HeaderTop>
     <section class="profile-number">
-      <a href="javascript:" class="profile-link">
+      <router-link to="/login" class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-wode1"></i>
         </div>
         <div class="user-info">
           <p class="user-info-top">登录/注册</p>
           <p>
-                <span class="user-icon">
-                  <i class="iconfont icon-phone icon-mobile"></i>
-                </span>
+            <span class="user-icon">
+              <i class="iconfont icon-phone icon-mobile"></i>
+            </span>
             <span class="icon-mobile-number">暂无绑定手机号</span>
           </p>
         </div>
         <span class="arrow">
-              <i class="iconfont icon-arrow-right"></i>
-            </span>
-      </a>
+          <i class="iconfont icon-arrow-right"></i>
+        </span>
+      </router-link>
     </section>
     <section class="profile_info_data border-1px">
       <ul class="info_data_list">
@@ -93,6 +93,7 @@
 
 <script>
 import HeaderTop from '../../components/HeaderTop/HeaderTop'
+
 export default {
   name: 'Profile',
   components: {
@@ -105,15 +106,18 @@ export default {
   @import "../../common/stylus/mixins.styl"
   .profile //我的
     width 100%
+    overflow: hidden
     .profile-number
       margin-top 45.5px
       top-border-1px(#e4e4e4)
+
       .profile-link
         clearFix()
         position relative
         display block
         background #02a774
         padding 20px 10px
+
         .profile_image
           float left
           width 60px
@@ -121,103 +125,130 @@ export default {
           border-radius 50%
           overflow hidden
           vertical-align top
+
           .icon-wode1
             background #e4e4e4
             font-size 60px
+
         .user-info
           float left
           margin-top 8px
           margin-left 15px
+
           p
             font-weight: 700
             font-size 18px
             color #fff
+
             &.user-info-top
               padding-bottom 8px
+
             .user-icon
               display inline-block
               margin-left -15px
               margin-right 5px
               width 20px
               height 20px
+
               .icon-mobile
                 font-size 30px
                 vertical-align text-top
+
             .icon-mobile-number
               font-size 14px
               color #fff
+
         .arrow
           width 12px
           height 12px
           position absolute
           right 15px
           top 40%
+
           .icon-arrow-right
             color #fff
             font-size 5px
+
     .profile_info_data
       bottom-border-1px(#e4e4e4)
       width 100%
       background #fff
       overflow hidden
+
       .info_data_list
         clearFix()
+
         .info_data_link
           float left
           width 33%
           text-align center
           border-right 1px solid #f1f1f1
+
           .info_data_top
             display block
             width 100%
             font-size 14px
             color #333
             padding 15px 5px 10px
+
             span
               display inline-block
               font-size 30px
               color #f90
               font-weight 700
               line-height 30px
+
           .info_data_bottom
             display inline-block
             font-size 14px
             color #666
             font-weight 400
             padding-bottom 10px
+
         .info_data_link:nth-of-type(2)
           .info_data_top
             span
               color #ff5f3e
+
         .info_data_link:nth-of-type(3)
           border 0
+
           .info_data_top
             span
               color #6ac20b
+
     .profile_my_order
       top-border-1px(#e4e4e4)
       margin-top 10px
       background #fff
+
       .my_order
         display flex
         align-items center
         padding-left 15px
-        >span
+
+        > span
           display flex
           align-items center
           width 20px
           height 20px
-          >.iconfont
+
+          > .iconfont
             margin-left -10px
             font-size 30px
+
           .icon-dingdan1
             color #02a774
+
           .icon-jifen
             color #ff5f3e
+
           .icon-huiyuan
             color #f90
+
           .icon-chengshi
             color #02a774
+
         .my_order_div
           width 100%
           border-bottom 1px solid #f1f1f1
@@ -226,11 +257,14 @@ export default {
           color #333
           display flex
           justify-content space-between
+
           span
             display block
+
           .my_order_icon
             width 10px
             height 10px
+
             .icon-arrow-right
               color #bbb
               font-size 10px
