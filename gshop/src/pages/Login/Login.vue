@@ -40,7 +40,8 @@
               </section>
               <section class="login_message">
                 <input type="text" maxlength="11" placeholder="验证码" v-model="captcha">
-                <img class="get_verification" src="./images/captcha.svg" alt="captcha">
+                <img class="get_verification" src="http://localhost:4000/captcha"
+                     alt="captcha" @click="getCaptcha" ref="captcha">
               </section>
             </section>
           </div>
@@ -57,6 +58,7 @@
 </template>
 
 <script>
+import {reqSmsLogin, reqSendCode, reqPwdLogin} from '../../api'
 import AlertTip from '../../components/AlertTip/AlertTip'
 export default {
   name: 'Login',
@@ -84,19 +86,30 @@ export default {
   },
   methods: {
     //  异步获取短信验证码
-    getCode () {
+    async getCode () {
       //  启动倒计时
       if (!this.computeTime) {
         this.computeTime = 30
-        const intervalId = setInterval(() => {
+        this.intervalId = setInterval(() => {
           this.computeTime--
           if (this.computeTime <= 0) {
             //  停止计时
-            clearInterval(intervalId)
+            clearInterval(this.intervalId)
           }
         }, 1000)
       }
       //  发送ajax（向指定手机号发送验证码）
+      const result = await reqSendCode(this.phone)
+      if (result.code === 1) {
+        //  显示提示
+        this.showAlert(result.msg)
+        //  停止倒计时
+        if (this.computeTime) {
+          this.computeTime = 0
+          clearInterval(this.intervalId)
+          this.intervalId = 0
+        }
+      }
     },
     //  登录异常提示
     showAlert (alertText) {
@@ -104,37 +117,76 @@ export default {
       this.alertShow = true
     },
     //  异步登录
-    login () {
+    async login () {
+      let result = null
       //  前台表单验证
       if (this.loginWay) {
         //  短信登录验证
-        const {rightPhone, code} = this
+        const {rightPhone, phone, code} = this
+
         if (!rightPhone) {
           //  手机号不正确
           this.showAlert('手机号不正确')
+          // eslint-disable-next-line
+          return
         } else if (!/^\d{6}$/.test(code)) {
           //  验证码必须是6为数字
           this.showAlert('验证码必须是6为数字')
+          // eslint-disable-next-line
+          return
         }
+        //  发送ajax短信请求登录
+        result = await reqSmsLogin(phone, code)
       } else {
         //  密码登录验证
         const {name, pwd, captcha} = this
         if (!name) {
           //  用户名不能为空
           this.showAlert('用户名不能为空')
+          // eslint-disable-next-line
+          return
         } else if (!pwd) {
           //  密码不能为空
           this.showAlert('密码不能为空')
+          // eslint-disable-next-line
+          return
         } else if (!captcha) {
           //  验证码不能为空
           this.showAlert('验证码不能为空')
+          // eslint-disable-next-line
+          return
         }
+        //  发送ajax密码请求登录
+        result = await reqPwdLogin({name, pwd, captcha})
+      }
+      //  停止计时
+      if (this.computeTime) {
+        this.computeTime = 0
+        clearInterval(this.intervalId)
+        this.intervalId = 0
+      }
+      //  根据结果数据处理
+      if (result.code === 0) {
+        const user = result.data
+        //  将user保存到vuex的state
+        this.$store.dispatch('recordUser', user)
+        //  去个人中心界面
+        this.$router.replace('/profile')
+      } else {
+        const msg = result.msg
+        this.getCaptcha()
+        this.showAlert(msg)
       }
     },
     //  自定义事件
     closeTip () {
       this.alertText = ''
       this.alertShow = false
+    },
+    //  获取验证码
+    getCaptcha () {
+      //  每次指定的src值要不一样
+      this.$refs.captcha.src = 'http://localhost:4000/captcha?time' + Date.now()
     }
   }
 }
