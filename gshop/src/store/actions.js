@@ -85,11 +85,13 @@ export default {
       commit(RECEIVE_SHOP_INFO, {info})
     }
   },
-  async getShopGoods ({commit}) {
+  async getShopGoods ({commit}, callback) {
     const result = await reqShopGoods()
     if (result.code === 0) {
       const goods = result.data
       commit(RECEIVE_SHOP_GOODS, {goods})
+      //  数据更新了，通知以下组件
+      callback && callback()
     }
   }
 }

@@ -144,11 +144,11 @@ export default {
         position: absolute
         top: 15px
         left: 0
+        color: #fff
         .icon-jianyou2
           display: block
           padding: 5px
           font-size: 20px
-          color: #fff!important
 
     .shop-content
       padding 30px 20px 5px 20px
