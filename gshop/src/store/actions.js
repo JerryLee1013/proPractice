@@ -9,7 +9,8 @@ import {
   RECEIVE_SHOP_INFO,
   RECEIVE_SHOP_GOODS,
   INCREMENT_FOOD_COUNT,
-  DECREMENT_FOOD_COUNT
+  DECREMENT_FOOD_COUNT,
+  CLEAR_CART
 } from './mutation-types'
 import {
   reqAddress,
@@ -74,12 +75,13 @@ export default {
     }
   },
   //  异步获取商品数据
-  async getShopRatings ({commit}) {
+  async getShopRatings ({commit}, callback) {
     const result = await reqShopRatings()
     if (result.code === 0) {
       const ratings = result.data
       commit(RECEIVE_SHOP_RATINGS, {ratings})
     }
+    callback && callback()
   },
   async getShopInfo ({commit}) {
     const result = await reqShopInfo()
@@ -104,5 +106,9 @@ export default {
     } else {
       commit(DECREMENT_FOOD_COUNT, {food})
     }
+  },
+  //  同步清空购物车
+  clearCart ({commit}) {
+    commit(CLEAR_CART)
   }
 }

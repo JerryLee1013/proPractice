@@ -16,7 +16,8 @@
           <li class="food-list-hook" v-for="(good, index) in goods" :key="index">
             <h1 class="title">{{good.name}}</h1>
             <ul>
-              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods" :key="index">
+              <li class="food-item bottom-border-1px" v-for="(food, index) in good.foods"
+                  :key="index" @click="showFood(food)">
                 <div class="icon">
                   <img width="57" height="57"
                        :src="food.icon">
@@ -40,7 +41,9 @@
           </li>
         </ul>
       </div>
+      <ShopCart></ShopCart>
     </div>
+    <Food :food="food" ref="food"></Food>
   </div>
 </template>
 
@@ -48,17 +51,21 @@
 import BScroll from 'better-scroll'
 import {mapState} from 'vuex'
 import CartControl from '../../../components/CartControl/CartControl'
-
+import Food from '../../../components/Food/Food'
+import ShopCart from '../../../components/ShopCart/ShopCart'
 export default {
   name: 'ShopFoods',
   data () {
     return {
       scrollY: 0,
-      tops: []
+      tops: [],
+      food: {}
     }
   },
   components: {
-    CartControl
+    CartControl,
+    Food,
+    ShopCart
   },
   mounted () {
     this.$store.dispatch('getShopGoods', () => {
@@ -118,6 +125,12 @@ export default {
       const scrollY = this.tops[index]
       this.scrollY = scrollY
       this.foodsScroll.scrollTo(0, -scrollY, 300)
+    },
+    //  点击显示对应Food组件
+    showFood (food) {
+      this.food = food
+      //  显示子组件，调用子组件对象的方法
+      this.$refs.food.toggleShow()
     }
   }
 }
