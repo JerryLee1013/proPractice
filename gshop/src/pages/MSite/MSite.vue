@@ -59,6 +59,7 @@ export default {
   },
   mounted () {
     this.$store.dispatch('getFoodTypes')
+    // this.$store.dispatch('getAddress')
     this.$store.dispatch('getShops')
   },
   computed: {

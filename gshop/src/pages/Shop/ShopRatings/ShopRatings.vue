@@ -59,7 +59,8 @@
                 <span class="iconfont" :class="rating.rateType===0?'icon-thumb_up':'icon-thumb_down'"></span>
                 <span class="item" v-for="(recommend, index) in rating.recommend" :key="index">{{recommend}}</span>
               </div>
-              <div class="time">{{dateFormat(rating)}}</div>
+              <!--<div class="time">{{dateFormat(rating)}}</div>-->
+              <div class="time">{{rating.rateTime | dateFormat}}</div>
             </div>
           </li>
         </ul>
@@ -70,7 +71,6 @@
 
 <script>
 import BScroll from 'better-scroll'
-import moment from 'moment'
 import {mapState, mapGetters} from 'vuex'
 import Star from '../../../components/Star/Star'
 export default {
@@ -112,10 +112,6 @@ export default {
     },
     toggleOnlyShowText () {
       this.onlyShowText = !this.onlyShowText
-    },
-    dateFormat (rating) {
-      const value = rating.rateTime
-      return moment(value).format('YYYY-MM-DD HH:mm:ss')
     }
   }
 }

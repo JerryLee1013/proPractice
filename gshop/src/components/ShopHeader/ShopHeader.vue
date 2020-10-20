@@ -1,7 +1,7 @@
 <template>
   <div class="shop-header">
     <nav class="shop-nav" :style="{backgroundImage:`url(${info.bgImg})`}">
-      <a class="back" @click="$router.replace('/msite')">
+      <a class="back" @click="$router.back()">
         <i class="iconfont icon-jiantou2"></i>
       </a>
     </nav>

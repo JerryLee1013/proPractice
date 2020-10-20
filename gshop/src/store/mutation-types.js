@@ -7,6 +7,7 @@ export const RESET_USER_INFO = 'reset_user_info' // 重置用户信息
 export const RECEIVE_SHOP_GOODS = 'receive_shop_goods' // 接收商家商品数组
 export const RECEIVE_SHOP_RATINGS = 'receive_shop_ratings' // 接收商家评价
 export const RECEIVE_SHOP_INFO = 'receive_shop_info' // 接收商家信息
+export const RECEIVE_SEARCH_SHOPS = 'receive_search_shops' // 接收搜索到的商家信息
 
 export const INCREMENT_FOOD_COUNT = 'increment_food_count' // 增加food数量
 export const DECREMENT_FOOD_COUNT = 'decrement_food_count' // 减少food数量
